@@ -25,6 +25,7 @@ var VoteNY = function VoteNY() {
 	 * @param PageID Integer: internal ID number of the current article
 	 */
 	this.clickVote = function( TheVote, PageID ) {
+		// console.log(TheVote);
 		$.post(
 			mw.util.wikiScript(), {
 				action: 'ajax',
@@ -78,7 +79,7 @@ var VoteNY = function VoteNY() {
 		if ( action == 5 ) {
 			rsfun = 'wfVoteStarsMulti';
 		}
-
+// console.log(TheVote+'-'+PageID);
 		$.post(
 			mw.util.wikiScript(), {
 				action: 'ajax',
@@ -86,6 +87,7 @@ var VoteNY = function VoteNY() {
 				rsargs: [ TheVote, PageID ]
 			}
 		).done( function( data ) {
+			// console.log(data);
 			$( '#rating_' + id ).html( data );
 		} );
 	};

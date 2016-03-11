@@ -38,6 +38,9 @@ class SpecialTopRatings extends IncludableSpecialPage {
 		// Parse the parameters passed to the special page
 		// Make sure that the limit parameter passed to the special page is
 		// an integer and that it's less than 100 (performance!)
+		// echo '4-3202';die();
+		// $vote = new VoteStars( 4 );
+		// $a =  $vote->display( 3202 );print_r($a);die();
 		if ( isset( $par ) && is_numeric( $par ) && $par < 100 ) {
 			$limit = intval( $par );
 		} elseif ( isset( $par ) && !is_numeric( $par ) ) {
@@ -128,7 +131,8 @@ class SpecialTopRatings extends IncludableSpecialPage {
 					$wgExtensionAssetsPath . '/VoteNY/Vote.js"></script>';
 			}
 			*/
-
+			arsort($ratings);
+			$x=1;
 			// yes, array_keys() is needed
 			foreach ( array_keys( $ratings ) as $discardThis => $pageId ) {
 				$titleObj = Title::newFromId( $pageId );
@@ -137,7 +141,7 @@ class SpecialTopRatings extends IncludableSpecialPage {
 				}
 
 				$vote = new VoteStars( $pageId );
-				$output .= '<div class="user-list-rating">' .
+				$output .= '<div class="user-list-rating"><span class="vote-rank">' .$x.'.</span>'.
 					Linker::link(
 						$titleObj,
 						$titleObj->getPrefixedText() // prefixed, so that the namespace shows!
@@ -155,6 +159,7 @@ class SpecialTopRatings extends IncludableSpecialPage {
 				$output .= "<div id=\"rating_{$id}\" class=\"rating-total\">" .
 					$vote->displayScore() .
 				'</div>';
+				$x++;
 			}
 		} else {
 			// Nothing? Well, display an informative error message rather than
