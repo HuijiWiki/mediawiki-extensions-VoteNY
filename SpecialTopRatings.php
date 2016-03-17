@@ -157,7 +157,7 @@ class SpecialTopRatings extends IncludableSpecialPage {
 						false
 					) . '</div>';
 				$output .= "<div id=\"rating_{$id}\" class=\"rating-total\">" .
-					$vote->displayScore() .
+					$vote->displayScore() .$vote->displayFollowingUserVotes() .
 				'</div>';
 				$x++;
 			}

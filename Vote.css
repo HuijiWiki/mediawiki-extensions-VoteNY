@@ -76,3 +76,11 @@
 .vote-remove-stars-link{
     float: right;
 }
+.friend-vote{
+	list-style: none;
+	margin: 0px !important;
+	-webkit-padding-start: 0px;
+}
+.friend-vote li{
+	margin: 0px !important;
+}

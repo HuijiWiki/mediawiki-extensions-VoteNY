@@ -241,6 +241,37 @@ class Vote {
 
 		return $output;
 	}
+
+	/**
+	 * get all vote users by votePageId
+	 * @param int $votePageId [vote_page_id]
+	 * @return array
+	 */
+	static function getVoteUserByVotePageId( $votePageId ){
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			'vote',
+			array(
+				'username',
+				'vote_value'
+			),
+			array(
+				'vote_page_id' => $votePageId
+			),
+			__METHOD__
+		);
+		if ( $res ) {
+			$result = array();
+			foreach ($res as $key => $value) {
+				$result[] = array(
+					'user_name' => $value->username,
+					'vote_value' => $value->vote_value
+				);
+			}
+			return $result;
+		}
+
+	}
 }
 
 /**
@@ -280,12 +311,12 @@ class VoteStars extends Vote {
 		$count = $this->count();
 		if ( isset( $count ) ) {
 			$output .= ' <span class="rating-total">(' .
-				wfMessage( 'voteny-votes', $count )->parse() . ')</span>';
+				wfMessage( 'voteny-votes', $count )->parse(). ')</span>';
 		}
 		$already_voted = $this->UserAlreadyVoted();
 		if ( $already_voted && $wgUser->isLoggedIn() ) {
 			$output .= '<div class="rating-voted">' .
-				wfMessage( 'voteny-gave-this', $already_voted )->parse() .
+				wfMessage( 'voteny-gave-this', $already_voted )->parse() .$this->displayFollowingUserVotes().
 			" </div>
 			<a href=\"javascript:void(0);\" class=\"vote-remove-stars-link\" data-page-id=\"{$this->PageID}\" data-vote-id=\"{$id}\">("
 				. wfMessage( 'voteny-remove' )->plain() .
@@ -361,7 +392,47 @@ class VoteStars extends Vote {
 		$count = $this->count();
 		return wfMessage( 'voteny-community-score', '<b>' . $this->getAverageVote() . '</b>' )
 		->numParams( $count )->text() .
-		' (' . wfMessage( 'voteny-ratings' )->numParams( $count )->parse() . ')<br><br>';
+		' (' . wfMessage( 'voteny-ratings' )->numParams( $count )->parse() . ')';
+	}
+
+	/**
+	 * display following users who did this vote
+	 * 
+	 */
+	function displayFollowingUserVotes(){
+		global $wgUser;
+		$votePageId = $this->PageID;
+		$hjUser = HuijiUser::newFromName( $wgUser->getName() );
+		$following = $hjUser->getFollowingUsers();
+		$followingList = $resultList = array();
+		foreach ($following as $key => $value) {
+			$followingList[] = $value['user_name'];
+		}
+		$voteUser = Vote::getVoteUserByVotePageId( $votePageId );
+		foreach ($voteUser as $key => $value) {
+			if( in_array($value['user_name'], $followingList) ){
+				$resultList[] = array(
+					'user_name' => $value['user_name'],
+					'vote_value' => $value['vote_value']
+				);
+			}
+		}
+		if ( count($resultList)>0 ) {
+			$userStr = '';
+			$num_count = (count($resultList)>4) ? 4 : count($resultList);
+			//Linker::link( User::newFromName($following_voter[3])->getUserPage(), $following_voter[3], array(), array() )
+			for ($i=0; $i < $num_count; $i++) { 
+				$userStr .= '<li>'.wfMessage('vote-user')->params(Linker::link( User::newFromName($resultList[$i]['user_name'])->getUserPage(), $resultList[$i]['user_name'], array(), array() ), $resultList[$i]['vote_value'])->text().'</li>';
+			}
+			// if ( count($resultList)>4 ) {
+			// 	$userStr .= '等';
+			// }
+			$output = "<br><ul class='friend-vote'>".$userStr."</ul><br>";
+		}else{
+			$output = '';
+		}
+		
+		return $output;
 	}
 
 }
