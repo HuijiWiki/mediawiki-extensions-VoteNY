@@ -224,4 +224,29 @@ class VoteHooks {
 		}
 		return true;
 	}
+
+	public static function onSkinRatingData( &$skinTemplate ){
+		$vote = new VoteStars( $skinTemplate->getSkin()->getTitle()->getArticleID() );
+		echo $vote->display();
+	}
+		/** 
+	 * Enable comments on every page
+	 *
+	 */
+	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) { 
+		// Add required CSS & JS via ResourceLoader
+        global $wgRequest, $wgUser;
+        $title = $skin->getTitle();
+        if( !($title->isMainPage()) && $out->isArticle() 
+        	&& !($title->isTalkPage()) && ($title->getNamespace()!=NS_USER) 
+        	&& $wgRequest->getText( 'action' )=='' && $title->exists()
+        ){
+			$out->addModuleStyles( 'ext.voteNY.styles' );
+			if ( $wgUser->isAllowed( 'voteny' ) ) {
+				$out->addModules( 'ext.voteNY.scripts' );
+			}
+		}
+
+	}
+
 }
