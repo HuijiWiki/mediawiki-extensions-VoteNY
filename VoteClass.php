@@ -405,6 +405,9 @@ class VoteStars extends Vote {
 	function displayFollowUser( $votePageId ){
 		global $wgUser;
 		$hjUser = HuijiUser::newFromName( $wgUser->getName() );
+		if (!$hjUser->isLoggedIn()){
+			return '';
+		}
 		$following = $hjUser->getFollowingUsers();
 		$followingList = $resultList = array();
 		foreach ($following as $key => $value) {
