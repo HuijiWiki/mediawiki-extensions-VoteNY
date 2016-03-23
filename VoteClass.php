@@ -306,7 +306,12 @@ class VoteStars extends Vote {
 		$output .= '<div class="rating-score">';
 		$output .= '<div class="voteboxrate">' . $overall_rating . '</div>';
 		$output .= '</div>';
-		$output .= '<div class="rating-section">';
+		if ( !$wgUser->isLoggedIn() ) {
+			$class = 'rating-section need-login';
+		}else{
+			$class = 'rating-section';
+		}
+		$output .= '<div class="'.$class.'">';
 		$output .= $this->displayStars( $id, $display_stars_rating, $voted );
 		$count = $this->count();
 		if ( isset( $count ) ) {
