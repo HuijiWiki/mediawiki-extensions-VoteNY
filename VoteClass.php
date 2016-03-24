@@ -303,7 +303,7 @@ class VoteStars extends Vote {
 		// Should probably be $this->PageID or something?
 		// 'cause we define $id just above as an empty string...duh
 		if ($wraper){
-			$output = '<div id="rating_' . $id . '" class="col-md-3">';
+			$output = '<div id="rating_' . $id . '" class="col-md-4">';
 		}
 		$output .= '<div class="rating-score">';
 		$output .= '<div class="voteboxrate">' . $overall_rating . '</div>';
