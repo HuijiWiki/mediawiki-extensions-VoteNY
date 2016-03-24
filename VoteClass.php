@@ -287,7 +287,7 @@ class VoteStars extends Vote {
 	 * @param bool $voted Has the user already voted? False by default
 	 * @return string HTML output
 	 */
-	function display( $voted = false ) {
+	function display( $voted = false, $wraper = true ) {
 		global $wgUser;
 
 		$overall_rating = $this->getAverageVote();
@@ -302,7 +302,9 @@ class VoteStars extends Vote {
 
 		// Should probably be $this->PageID or something?
 		// 'cause we define $id just above as an empty string...duh
-		$output = '<div id="rating_' . $id . '" class="col-md-3">';
+		if ($wraper){
+			$output = '<div id="rating_' . $id . '" class="col-md-3">';
+		}
 		$output .= '<div class="rating-score">';
 		$output .= '<div class="voteboxrate">' . $overall_rating . '</div>';
 		$output .= '</div>';
@@ -333,8 +335,10 @@ class VoteStars extends Vote {
 		$output .= '</div>
 				<div class="rating-clear">
 			</div>';
+		if ($wraper){
+			$output .= '</div>';			
+		}
 
-		$output .= '</div>';
 		return $output;
 	}
 

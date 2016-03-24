@@ -53,7 +53,7 @@ function wfVoteStars( $voteValue, $pageId ) {
 	}
 	$vote->insert( $voteValue );
 
-	return $vote->display( $voteValue );
+	return $vote->display( $voteValue, false );
 }
 
 $wgAjaxExportList[] = 'wfVoteStarsMulti';
