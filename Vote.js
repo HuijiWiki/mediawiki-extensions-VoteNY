@@ -133,9 +133,14 @@ var VoteNY = function VoteNY() {
 			}
 			var ratingElement = $( '#rating_' + id + '_' + x );
 			if ( !num && old_rating >= x ) {
-				ratingElement.attr( 'src', this.imagePath + 'star_' + star_on + '.gif' );
+				if (star_on = 'voted')
+					ratingElement.removeClass('on off half').addClass('voted');
+				else 
+					ratingElement.removeClass('off voted half').addClass('on');
+				//ratingElement.attr( 'src', this.imagePath + 'star_' + star_on + '.gif' );
 			} else {
-				ratingElement.attr( 'src', this.imagePath + 'star_off.gif' );
+				ratingElement.removeClass('on voted half').addClass('off');
+				//ratingElement.attr( 'src', this.imagePath + 'star_off.gif' );
 			}
 		}
 	};
@@ -146,7 +151,7 @@ var VoteNY = function VoteNY() {
 		}
 		this.clearRating( id, num, prev_rating );
 		for ( var x = 1; x <= num; x++ ) {
-			$( '#rating_' + id + '_' + x ).attr( 'src', this.imagePath + 'star_voted.gif' );
+			$( '#rating_' + id + '_' + x ).removeClass('on off half').addClass('voted');
 		}
 		this.last_id = id;
 	};
