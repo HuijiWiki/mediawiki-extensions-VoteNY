@@ -322,9 +322,9 @@ class VoteStars extends Vote {
 		}
 		$already_voted = $this->UserAlreadyVoted();
 		if ( $already_voted && $wgUser->isLoggedIn() ) {
-			// $output .= '<div class="rating-voted">' .
-			// 	wfMessage( 'voteny-gave-this', $already_voted )->parse() .
-			// " </div>
+			$output .= '<div class="rating-voted">' .
+				wfMessage( 'voteny-gave-this', $already_voted )->parse() .$this->displayFollowingUserVotes().
+			" </div>";
 			// <a href=\"javascript:void(0);\" class=\"vote-remove-stars-link\" data-page-id=\"{$this->PageID}\" data-vote-id=\"{$id}\">("
 			// 	. wfMessage( 'voteny-remove' )->plain() .
 			// ')</a>';
@@ -411,12 +411,10 @@ class VoteStars extends Vote {
 	 * display following users who did this vote
 	 * 
 	 */
-	function displayFollowUser( $votePageId ){
+	function displayFollowingUserVotes(){
 		global $wgUser;
+		$votePageId = $this->PageID;
 		$hjUser = HuijiUser::newFromName( $wgUser->getName() );
-		if (!$hjUser->isLoggedIn()){
-			return '';
-		}
 		$following = $hjUser->getFollowingUsers();
 		$followingList = $resultList = array();
 		foreach ($following as $key => $value) {
@@ -436,18 +434,18 @@ class VoteStars extends Vote {
 			$num_count = (count($resultList)>4) ? 4 : count($resultList);
 			//Linker::link( User::newFromName($following_voter[3])->getUserPage(), $following_voter[3], array(), array() )
 			for ($i=0; $i < $num_count; $i++) { 
-				$userStr .= Linker::link( User::newFromName($resultList[$i]['user_name'])->getUserPage(), $resultList[$i]['user_name'], array(), array() ).
-				'-'.$resultList[$i]['vote_value'].'分&nbsp';
+				$userStr .= '<li>'.wfMessage('vote-user')->params(Linker::link( User::newFromName($resultList[$i]['user_name'])->getUserPage(), $resultList[$i]['user_name'], array(), array() ), $resultList[$i]['vote_value'])->text().'</li>';
 			}
-			if ( count($resultList)>4 ) {
-				$userStr .= '等';
-			}
-			$output = "<br><b>(我关注的".$userStr."也对此页面进行了评分)</b><br>";
+			// if ( count($resultList)>4 ) {
+			// 	$userStr .= '等';
+			// }
+			$output = "<br><ul class='friend-vote'>".$userStr."</ul><br>";
 		}else{
 			$output = '';
 		}
 		
 		return $output;
 	}
+
 
 }
