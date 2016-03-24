@@ -38,6 +38,7 @@ $wgExtensionMessagesFiles['VoteNYMagic'] = __DIR__ . '/VoteNY.i18n.magic.php';
 
 $wgAutoloadClasses['Vote'] = __DIR__ . '/VoteClass.php';
 $wgAutoloadClasses['VoteStars'] = __DIR__ . '/VoteClass.php';
+$wgAutoloadClasses['InvalidateVoteCacheJob'] = __DIR__ . '/Jobs.php';
 
 // Set up the new special page, Special:TopRatings, which shows top rated pages
 // based on given criteria
@@ -70,4 +71,5 @@ $wgResourceModules['ext.voteNY.scripts'] = array(
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'VoteNY'
 );
-
+// The key is your job identifier (from the Job constructor), the value is your class name
+$wgJobClasses['invalidateVoteCacheJob'] = 'InvalidateVoteCacheJob';

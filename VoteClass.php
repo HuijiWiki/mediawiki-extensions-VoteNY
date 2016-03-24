@@ -95,24 +95,26 @@ class Vote {
 	 * Clear caches - memcached, parser cache and Squid cache
 	 */
 	function clearCache() {
-		global $wgUser, $wgMemc;
+		$jobParams = array( 'userid' => $this->Userid );
+		$job = new InvalidateVoteCacheJob( Title::newFromId($this->PageID), $jobParams );
+		JobQueueGroup::singleton()->push( $job );
 
-		// Kill internal cache
-		$wgMemc->delete( wfMemcKey( 'vote', 'count', $this->PageID ) );
-		$wgMemc->delete( wfMemcKey( 'vote', 'avg', $this->PageID ) );
+		// // Kill internal cache
+		// $wgMemc->delete( wfMemcKey( 'vote', 'count', $this->PageID ) );
+		// $wgMemc->delete( wfMemcKey( 'vote', 'avg', $this->PageID ) );
 
-		// Purge squid
-		$pageTitle = Title::newFromID( $this->PageID );
-		if ( is_object( $pageTitle ) ) {
-			$pageTitle->invalidateCache();
-			$pageTitle->purgeSquid();
+		// // Purge squid
+		// $pageTitle = Title::newFromID( $this->PageID );
+		// if ( is_object( $pageTitle ) ) {
+		// 	$pageTitle->invalidateCache();
+		// 	$pageTitle->purgeSquid();
 
-			// Kill parser cache
-			$article = new Article( $pageTitle, /* oldid */0 );
-			$parserCache = ParserCache::singleton();
-			$parserKey = $parserCache->getKey( $article, $wgUser );
-			$wgMemc->delete( $parserKey );
-		}
+		// 	// Kill parser cache
+		// 	$article = new Article( $pageTitle, /* oldid */0 );
+		// 	$parserCache = ParserCache::singleton();
+		// 	$parserKey = $parserCache->getKey( $article, $wgUser );
+		// 	$wgMemc->delete( $parserKey );
+		// }
 	}
 
 	/**
@@ -302,8 +304,9 @@ class VoteStars extends Vote {
 
 		// Should probably be $this->PageID or something?
 		// 'cause we define $id just above as an empty string...duh
+		$output = '';
 		if ($wraper){
-			$output = '<div id="rating_' . $id . '" class="col-md-4">';
+			$output .= '<div id="rating_' . $id . '" class="col-md-4">';
 		}
 		$output .= '<div class="rating-score">';
 		$output .= '<div class="voteboxrate">' . $overall_rating . '</div>';
