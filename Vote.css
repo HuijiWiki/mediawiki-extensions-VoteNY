@@ -81,3 +81,49 @@
 .friend-vote li{
 	margin: 0px !important;
 }
+.rating-section span.vote-rating-star{
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+}
+
+.rating-section span.vote-rating-star:before {
+    content: "\f006";
+    padding-right: 5px;
+    color: #777777;
+}
+.rating-section span.vote-rating-star.voted:before{
+	content: "\f005";
+    color: #000;
+}
+.rating-section span.vote-rating-star.on:before{
+	content: "\f005";
+    color: #777;
+}
+.rating-section span.vote-rating-star.off:before{
+	content: "\f006";
+    color: #777777;
+}
+.rating-section span.vote-rating-star.half:before{
+	content: "\f123"
+	color: #777;
+}
+.rating-section span.vote-rating-star:hover {
+    cursor: pointer;
+}
+.rating-section span.vote-rating-star:hover:before, .rating-section span.vote-rating-star:hover ~ span.vote-rating-star:before{
+	content: "\f005";
+    color: #000;
+}
+.rating-section {
+	float: left;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    font-size: 18px;
+}
+.rating-total{
+	font-size: 14px;
+	display:block;
+}
+}

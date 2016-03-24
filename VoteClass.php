@@ -320,8 +320,11 @@ class VoteStars extends Vote {
 		$output .= $this->displayStars( $id, $display_stars_rating, $voted );
 		$count = $this->count();
 		if ( isset( $count ) ) {
-			$output .= ' <span class="rating-total">(' .
-				wfMessage( 'voteny-votes', $count )->parse() . ')</span>';
+			$output .= ' </div><span class="rating-total">' .
+				wfMessage( 'voteny-votes', $count )->parse() . '</span>';
+		}
+		else {
+			$output .= "</div>";
 		}
 		$already_voted = $this->UserAlreadyVoted();
 		if ( $already_voted && $wgUser->isLoggedIn() ) {
@@ -364,34 +367,33 @@ class VoteStars extends Vote {
 		}
 		$output = '';
 
-		for ( $x = 1; $x <= $this->maxRating; $x++ ) {
+		for ( $x = $this->maxRating; $x >= 1; $x-- ) {
 			if ( !$id ) {
 				$action = 3;
 			} else {
 				$action = 5;
 			}
-			$output .= "<img class=\"vote-rating-star\" data-vote-the-vote=\"{$x}\"" .
-				" data-page-id=\"{$this->PageID}\"" .
-				" data-vote-id=\"{$id}\" data-vote-action=\"{$action}\" data-vote-rating=\"{$rating}\"" .
-				" data-vote-voted=\"{$voted}\" id=\"rating_{$id}_{$x}\"" .
-				" src=\"{$wgExtensionAssetsPath}/VoteNY/images/star_";
+			$classes = '';
 			switch ( true ) {
 				case $rating >= $x:
 					if ( $voted ) {
-						$output .= 'voted';
+						$classes .= 'voted';
 					} else {
-						$output .= 'on';
+						$classes .= 'on';
 					}
 					break;
 				case ( $rating > 0 && $rating < $x && $rating > ( $x - 1 ) ):
-					$output .= 'half';
+					$classes .= 'half';
 					break;
 				case ( $rating < $x ):
-					$output .= 'off';
+					$classes .= 'off';
 					break;
 			}
-
-			$output .= '.gif" alt="" />';
+			$output .= "<span class=\"vote-rating-star $classes\" data-vote-the-vote=\"{$x}\"" .
+				" data-page-id=\"{$this->PageID}\"" .
+				" data-vote-id=\"{$id}\" data-vote-action=\"{$action}\" data-vote-rating=\"{$rating}\"" .
+				" data-vote-voted=\"{$voted}\" id=\"rating_{$id}_{$x}\"";
+			$output .= '></span>';
 		}
 
 		return $output;
