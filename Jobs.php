@@ -31,10 +31,10 @@ class InvalidateVoteCacheJob extends Job {
 			$pageTitle->purgeSquid();
 
 			// Kill parser cache
-			$article = new Article( $pageTitle, /* oldid */0 );
-			$parserCache = ParserCache::singleton();
-			$parserKey = $parserCache->getKey( $article, User::newFromId($this->params['userid']) );
-			$wgMemc->delete( $parserKey );
+			// $article = new Article( $pageTitle, /* oldid */0 );
+			// $parserCache = ParserCache::singleton();
+			// $parserKey = $parserCache->getKey( $article, User::newFromId($this->params['userid']) );
+			// $wgMemc->delete( $parserKey );
 		}
 	}
 }

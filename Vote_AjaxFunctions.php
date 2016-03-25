@@ -46,12 +46,20 @@ function wfVoteStars( $voteValue, $pageId ) {
 	if ( !$wgUser->isAllowed( 'voteny' ) ) {
 		return '';
 	}
-
 	$vote = new VoteStars( $pageId );
-	if ( $vote->UserAlreadyVoted() ) {
-		$vote->delete();
-	}
-	$vote->insert( $voteValue );
+	if (HuijiFunctions::addLock('wfVoteStars'.$pageId.'User'.$wgUser->getId(), 5)){
+		if ( $vote->UserAlreadyVoted() ) {
+			$vote->delete();
+		}
+		$vote->insert( $voteValue );	
+		HuijiFunctions::releaseLock('wfVoteStars'.$pageId.'User'.$wgUser->getId());
+	} 
+
+	// $vote = new VoteStars( $pageId );
+	// if ( $vote->UserAlreadyVoted() ) {
+	// 	$vote->delete();
+	// }
+	// $vote->insert( $voteValue );
 
 	return $vote->display( $voteValue, false );
 }
@@ -65,10 +73,14 @@ function wfVoteStarsMulti( $voteValue, $pageId ) {
 	}
 
 	$vote = new VoteStars( $pageId );
-	if ( $vote->UserAlreadyVoted() ) {
-		$vote->delete();
-	}
-	$vote->insert( $voteValue );
+	if (HuijiFunctions::addLock('wfVoteStarsMulti'.$pageId, 5)){
+		if ( $vote->UserAlreadyVoted() ) {
+			$vote->delete();
+		}
+		$vote->insert( $voteValue );	
+		HuijiFunctions::releaseLock('wfVoteStarsMulti'.$pageId);
+	} 
+
 
 	return $vote->displayScore();
 }

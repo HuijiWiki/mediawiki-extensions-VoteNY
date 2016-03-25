@@ -106,7 +106,7 @@
     color: #777777;
 }
 .rating-section span.vote-rating-star.half:before{
-	content: "\f123"
+	content: "\f123";
 	color: #777;
 }
 .rating-section span.vote-rating-star:hover {
@@ -125,5 +125,4 @@
 .rating-total{
 	font-size: 14px;
 	display:block;
-}
 }
