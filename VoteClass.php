@@ -334,11 +334,11 @@ class VoteStars extends Vote {
 			// <a href=\"javascript:void(0);\" class=\"vote-remove-stars-link\" data-page-id=\"{$this->PageID}\" data-vote-id=\"{$id}\">("
 			// 	. wfMessage( 'voteny-remove' )->plain() .
 			// ')</a>';
-			$output .= '<div class="rating-voted">' .
+			/*$output .= '<div class="rating-voted">' .
 				wfMessage( 'voteny-gave-this', $already_voted )->parse() .
-			' </div>';
+			' </div>';*/
 		}
-		$output .= '</div>
+		$output .= '
 				<div class="rating-clear">
 			</div>';
 		if ($wraper){
