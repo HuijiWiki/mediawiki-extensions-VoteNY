@@ -34,7 +34,7 @@ class VoteHooks {
 		// Disable parser cache (sadly we have to do this, because the caching is
 		// messing stuff up; we want to show an up-to-date rating instead of old
 		// or totally wrong rating, i.e. another page's rating...)
-		$parser->disableCache();
+		// $parser->disableCache();
 
 		// Add CSS & JS
 		// In order for us to do this *here* instead of having to do this in
