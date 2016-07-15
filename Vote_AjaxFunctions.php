@@ -81,7 +81,7 @@ function wfVoteStarsMulti( $voteValue, $pageId ) {
 		HuijiFunctions::releaseLock('wfVoteStarsMulti'.$pageId);
 	} 
 
-
+	return $vote->display( $voteValue, false );
 	return $vote->displayScore();
 }
 

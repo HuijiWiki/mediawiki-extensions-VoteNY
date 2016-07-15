@@ -300,7 +300,7 @@ class VoteStars extends Vote {
 			$display_stars_rating = $this->getAverageVote();
 		}
 
-	 	$id = '';
+	 	$id = $this->PageID;
 
 		// Should probably be $this->PageID or something?
 		// 'cause we define $id just above as an empty string...duh
