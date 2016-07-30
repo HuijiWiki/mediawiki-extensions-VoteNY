@@ -54,7 +54,7 @@ class SpecialTopRatings extends IncludableSpecialPage {
 		}
 
 		// Add CSS
-		$out->addModuleStyles( 'ext.voteNY.styles' );
+		$out->addModuleStyles( array('ext.voteNY.styles', 'ext.socialprofile.userstats.css' );
 		/* scroll down some lines to see why I'm not including JS here anymore
 		if ( $user->isAllowed( 'voteny' ) ) {
 			$out->addModules( 'ext.voteNY.scripts' );
@@ -133,6 +133,7 @@ class SpecialTopRatings extends IncludableSpecialPage {
 			*/
 			arsort($ratings);
 			$x=1;
+			$output .= "<ul class=\"list-group\">";
 			// yes, array_keys() is needed
 			foreach ( array_keys( $ratings ) as $discardThis => $pageId ) {
 				$titleObj = Title::newFromId( $pageId );
@@ -141,13 +142,13 @@ class SpecialTopRatings extends IncludableSpecialPage {
 				}
 
 				$vote = new VoteStars( $pageId );
-				$output .= '<div class="user-list-rating"><span class="vote-rank">' .$x.'.</span>'.
+				$output .= '<li class="user-list-rating list-group-item "><div class="vote-rank">' .$x.'.</div>'.
 					Linker::link(
 						$titleObj,
 						$titleObj->getPrefixedText() // prefixed, so that the namespace shows!
 					) . $this->msg( 'word-separator' )->escaped() . // i18n overkill? ya betcha...
 					$this->msg( 'parentheses', $ratings[$pageId] )->escaped() .
-				'</div>';
+				'</li>';
 
 				$id = mt_rand(); // AFAIK these IDs are and originally were totally random...
 				$output .= "<div id=\"rating_stars_{$id}\">" .
@@ -156,9 +157,9 @@ class SpecialTopRatings extends IncludableSpecialPage {
 						self::getAverageRatingForPage( $pageId ),
 						false
 					) . '</div>';
-				$output .= "<div id=\"rating_{$id}\" class=\"rating-total\">" .
+				$output .= "<li id=\"rating_{$id}\" class=\"rating-total list-group-item\" >" .
 					$vote->displayScore() .$vote->displayFollowingUserVotes() .
-				'</div>';
+				'</li>';
 				$x++;
 			}
 		} else {
@@ -166,6 +167,7 @@ class SpecialTopRatings extends IncludableSpecialPage {
 			// a blank page or somesuch.
 			$output .= $this->msg( 'topratings-no-pages' )->escaped();
 		}
+		$output .= "</ul>";
 
 		// Output everything!
 		$out->addHTML( $output );
