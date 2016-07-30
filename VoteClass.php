@@ -420,6 +420,9 @@ class VoteStars extends Vote {
 		global $wgUser;
 		$votePageId = $this->PageID;
 		$hjUser = HuijiUser::newFromName( $wgUser->getName() );
+		if ($hjUser == null){
+			return '';
+		}
 		$following = $hjUser->getFollowingUsers();
 		$followingList = $resultList = array();
 		foreach ($following as $key => $value) {
