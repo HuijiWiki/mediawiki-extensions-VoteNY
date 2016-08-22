@@ -54,7 +54,7 @@ class SpecialTopRatings extends IncludableSpecialPage {
 		}
 
 		// Add CSS
-		$out->addModuleStyles( array('ext.voteNY.styles', 'ext.socialprofile.userstats.css' );
+		$out->addModuleStyles( array('ext.voteNY.styles', 'ext.socialprofile.userstats.css' ));
 		/* scroll down some lines to see why I'm not including JS here anymore
 		if ( $user->isAllowed( 'voteny' ) ) {
 			$out->addModules( 'ext.voteNY.scripts' );
