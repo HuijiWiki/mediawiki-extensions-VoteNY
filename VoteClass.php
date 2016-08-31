@@ -329,7 +329,7 @@ class VoteStars extends Vote {
 		$already_voted = $this->UserAlreadyVoted();
 		if ( $already_voted && $wgUser->isLoggedIn() ) {
 			$output .= '<div class="rating-voted">' .
-				wfMessage( 'voteny-gave-this', $already_voted )->parse() .$this->displayFollowingUserVotes().
+				wfMessage( 'voteny-gave-this', $already_voted )->text() .$this->displayFollowingUserVotes().
 			" </div>";
 			// <a href=\"javascript:void(0);\" class=\"vote-remove-stars-link\" data-page-id=\"{$this->PageID}\" data-vote-id=\"{$id}\">("
 			// 	. wfMessage( 'voteny-remove' )->plain() .
