@@ -49,6 +49,7 @@
 .rating-voted {
 	line-height: 20px;
 	font-size: 9px;
+	clear:both;
 }
 
 /* Styling for the (n votes) after rating box/stars */

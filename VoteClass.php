@@ -308,7 +308,7 @@ class VoteStars extends Vote {
 		if ($wraper){
 			$output .= '<div id="rating_' . $id . '" class="col-md-4 secondary">';
 		}
-		$output .= '<div class="rating-score">';
+	        $output .= '<div class="rating-score">';
 		$output .= '<div class="voteboxrate">' . $overall_rating . '</div>';
 		$output .= '</div>';
 		if ( !$wgUser->isLoggedIn() ) {
