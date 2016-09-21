@@ -173,6 +173,7 @@ class Vote {
 				$stats = new UserStatsTrack( $this->Userid, $this->Username );
 				$stats->incStatField( 'vote' );
 			}
+			Hooks::run('VoteNY::vote', [$this, $voteValue, $this->PageID]);
 		}
 	}
 
