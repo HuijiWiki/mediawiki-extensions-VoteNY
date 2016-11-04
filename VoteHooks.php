@@ -253,7 +253,7 @@ class VoteHooks {
 		$pageInfo['rating'][] = [ wfMessage('pageinfo-vote-count')->text() , self::getNumberOfVotesPage( $context->getTitle() ) ];
 	}
 	public static function onHuijiPageInfo( $page, &$data ){
-		$data['averageRating'] = SpecialTopRating::getAverageVoteForPage( $page->getId() ) ;
-		$data['ratingCount'] = VoteHooks::getAverageVote( $page->getId() );
+		$data['averageRating'] = SpecialTopRatings::getAverageRatingForPage( $page->getId() ) ;
+		$data['ratingCount'] = VoteHooks::getNumberOfVotesPage( $page->getTitle() );
 	}
 }
