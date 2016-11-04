@@ -56,7 +56,8 @@ $wgHooks['ParserFirstCallInit'][] = 'VoteHooks::setupNumberOfVotesPageParser';
 //$wgHooks['LoadExtensionSchemaUpdates'][] = 'VoteHooks::addTable';
 $wgHooks['SkinRatingData'][] = 'VoteHooks::onSkinRatingData';
 $wgHooks['BeforePageDisplay'][] = 'VoteHooks::onBeforePageDisplay';
-
+$wgHooks['InfoAction'][] = 'VoteHooks::onInfoAction';
+$wgHooks['HuijiPageInfo'][] = 'VoteHooks::onHuijiPageInfo';
 // ResourceLoader support for MediaWiki 1.17+
 $wgResourceModules['ext.voteNY.styles'] = array(
 	'styles' => 'Vote.css',

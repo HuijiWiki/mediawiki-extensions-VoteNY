@@ -17,5 +17,8 @@
 	"vote-user":"$1选择了$2星",
 	"topratings": "最受好评的页面",
 	"topratings-no-pages": "没有最受好评的页面。",
-	"right-voteny": "投票页面"
+	"right-voteny": "投票页面",
+	"pageinfo-rating":"页面评分",
+	"pageinfo-vote-avg":"平均得分",
+	"pageinfo-vote-count":"总票数"
 }

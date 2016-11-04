@@ -246,7 +246,14 @@ class VoteHooks {
 				$out->addModules( 'ext.voteNY.scripts' );
 			}
 		}
-
 	}
-
+	public static function onInfoAction( $context, &$pageInfo ){
+		$vote = new VoteStars($context->getTitle()->getArticleID());
+		$pageInfo['rating'][] = [ wfMessage('pageinfo-vote-avg')->text() , $vote->getAverageVote() ];
+		$pageInfo['rating'][] = [ wfMessage('pageinfo-vote-count')->text() , self::getNumberOfVotesPage( $context->getTitle() ) ];
+	}
+	public static function onHuijiPageInfo( $page, &$data ){
+		$data['averageRating'] = SpecialTopRating::getAverageVoteForPage( $page->getId() ) ;
+		$data['ratingCount'] = VoteHooks::getAverageVote( $page->getId() );
+	}
 }
