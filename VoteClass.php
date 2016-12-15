@@ -310,7 +310,7 @@ class VoteStars extends Vote {
 			$output .= '<div id="rating_' . $id . '" class="col-md-4 secondary">';
 		}
 	        $output .= '<div class="rating-score">';
-		$output .= '<div class="voteboxrate">' . $overall_rating . '</div>';
+		$output .= '<div class="voteboxrate">' . round($overall_rating*2,1) . '</div>';
 		$output .= '</div>';
 		if ( !$wgUser->isLoggedIn() ) {
 			$class = 'rating-section need-login';
